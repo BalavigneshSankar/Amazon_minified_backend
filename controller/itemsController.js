@@ -12,7 +12,7 @@ exports.getAllItems = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }
@@ -29,7 +29,7 @@ exports.updateItem = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }
@@ -69,7 +69,7 @@ exports.getFilteredItems = async (req, res) => {
       }
       queryObj = { $or: categoryQuery, price: priceQuery };
     }
-    
+
     const items = await Item.aggregate([
       {
         $match: queryObj,
@@ -84,7 +84,7 @@ exports.getFilteredItems = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }

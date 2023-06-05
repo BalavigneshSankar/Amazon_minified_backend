@@ -12,7 +12,7 @@ exports.getCartItems = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }
@@ -29,7 +29,7 @@ exports.createCartItem = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }
@@ -48,7 +48,7 @@ exports.updateCartItem = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }
@@ -63,7 +63,7 @@ exports.deleteCartItem = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "fail",
       message: err,
     });
   }
