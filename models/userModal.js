@@ -5,23 +5,23 @@ const bcrypt = require("bcryptjs");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please provide your name"],
+    required: [true, "Provide your name"],
     uppercase: true,
   },
   email: {
     type: String,
-    required: [true, "Please provide your email"],
+    required: [true, "Provide your email"],
     unique: true,
     lowercase: true,
     validate: {
       validator: validator.isEmail,
-      message: "Please provide a valid email",
+      message: "Provide a valid email",
     },
   },
   password: {
     type: String,
     required: [true, "Provide a password"],
-    minlength: 8,
+    minlength: [8, "Password should be minimum 8 characters long"],
     select: false,
   },
   passwordConfirm: {
@@ -37,11 +37,6 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function (next) {
-  // Check if password is modified
-  if (!this.isModified("password")) {
-    return next();
-  }
-
   // Encrypting password
   this.password = await bcrypt.hash(this.password, 12);
 
@@ -50,6 +45,13 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+
+userSchema.methods.checkPassword = async function (
+  enteredPassword,
+  databasePassword
+) {
+  return await bcrypt.compare(enteredPassword, databasePassword);
+};
 
 const User = mongoose.model("User", userSchema);
 
