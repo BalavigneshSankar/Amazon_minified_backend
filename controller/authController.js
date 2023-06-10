@@ -1,6 +1,6 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
-const User = require("./../models/userModal");
+const User = require("./../models/userModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/AppError");
 
@@ -23,9 +23,6 @@ exports.signUp = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     token,
-    data: {
-      user: newUser,
-    },
   });
 });
 
@@ -56,20 +53,24 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (req.headers?.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   }
-  // Without header, token is null. with header "Bearer null", token is "null"
+
+  // Without header i.e in postman, token is undefined. with header "Bearer null" i.e in client, token is "null"
   if (!token || token === "null") {
     return next(new AppError("Log in to get access", 401));
   }
+
   // 2. Validate token
   const decoded = await promisify(jwt.verify)(
     token,
     process.env.JWT_SECRET_KEY
   );
+
   // 3. Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
     throw new AppError("The user belonging to this token does not exist", 401);
   }
+
   // Sending the user data to the next middleware / protected route
   req.user = currentUser;
   next();

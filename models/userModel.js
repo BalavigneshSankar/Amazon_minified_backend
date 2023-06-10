@@ -34,6 +34,15 @@ const userSchema = new mongoose.Schema({
       message: "Password and confirm password must be the same",
     },
   },
+  cartItems: [
+    {
+      thumbnail: String,
+      title: String,
+      price: Number,
+      quantity: Number,
+      stock: Number,
+    },
+  ],
 });
 
 userSchema.pre("save", async function (next) {
