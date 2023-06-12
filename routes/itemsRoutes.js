@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route("/").get(authController.protect, itemController.getAllItems);
 
-router.route("/:id").post(authController.protect, itemController.updateItem);
+router.route("/:id").put(authController.protect, itemController.updateItem);
 
 router
   .route("/filteredItems")

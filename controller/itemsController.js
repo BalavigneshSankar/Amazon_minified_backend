@@ -13,7 +13,9 @@ exports.getAllItems = catchAsync(async (req, res, next) => {
 });
 
 exports.updateItem = catchAsync(async (req, res, next) => {
-  const item = await Item.findByIdAndUpdate(req.params.id, req.body);
+  const item = await Item.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
   res.status(200).json({
     status: "success",
     data: {
