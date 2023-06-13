@@ -1,0 +1,3 @@
+Features:
+Prevent hashed password exposure if created new user is sent in the response on sign up.
+Avoid cart items order change on updating quantity.
