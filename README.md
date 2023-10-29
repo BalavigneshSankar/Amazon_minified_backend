@@ -12,8 +12,6 @@ Backend of the Full Stack Amazon minified site.
 
 ## Features
 -  User authentication
--  Fuzzy search
--  Filter
 -  Cart
 
 ## Reference
